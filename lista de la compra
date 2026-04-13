@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de la compra</title>
+</head>
+
+<body>
+
+<h1>Lista de la compra</h1>
+
+<form onsubmit="return false;">
+    <label>Producto</label>
+    <input type="text" placeholder="Introduce tu producto" id="producto">
+    <button onclick="agregar()">Agregar</button>
+    <button onclick="borrarUltimo()">Borrar último</button>
+    <button onclick="enviarEmail()">Enviar por email</button>
+</form>
+
+<ul id="lista"></ul>
+
+
+    <script>
+function agregar() {
+    let input = document.getElementById('producto');
+    let valor = input.value;
+
+    if (valor.trim() !== "") {
+        let li = document.createElement('li');
+        li.textContent = valor;
+
+        document.getElementById('lista').appendChild(li);
+        input.value = "";
+        input.focus();
+    }
+}
+
+function borrarUltimo() {
+    let lista = document.getElementById('lista');
+
+    if (lista.lastChild) {
+        lista.removeChild(lista.lastChild);
+    } else {
+        alert("La lista está vacía");
+    }
+}
+
+function enviarEmail() {
+    let lista = document.getElementById('lista');
+    let items = lista.getElementsByTagName('li');
+
+    let texto = "Lista de la compra:%0D%0A";
+
+    for (let i = 0; i < items.length; i++) {
+        texto += "- " + items[i].textContent + "%0D%0A";
+    }
+
+    window.location.href = "mailto:?subject=Lista de la compra&body=" + texto;
+}
+</script>
+
+</body>
+</html>
